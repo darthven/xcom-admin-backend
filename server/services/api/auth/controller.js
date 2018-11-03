@@ -31,40 +31,6 @@ async function auth (ctx) {
   
 }
 
-async function jwtSign (ctx) {
-  const user = ctx.state.user
-  if (!ctx.state.sign) {
-    throw new Exception(401, 'Unauthorized')
-  }
-  const userToken = jwt.sign({
-    id: user.id,
-    email: user.email
-  }, JWT_SECRET)
-  ctx.status = 200
-  ctx.body = {
-    status: 'success',
-    token: userToken,
-    user: user
-  }
-}
-
-async function userGuard (ctx, next) {
-    await passport.authenticate('jwt', function (err, user) {
-      if (!user) {
-        ctx.status = 401
-      }
-      ctx.state.user = user
-    })(ctx)
-    if (ctx.status !== 401) {
-      ctx.state.sign = true
-      return next()
-    } else {
-      throw new Exception(401, 'Unauthorized')
-    }
-}
-
 export default {
-  auth,
-  jwtSign,
-  userGuard
+  auth
 }
