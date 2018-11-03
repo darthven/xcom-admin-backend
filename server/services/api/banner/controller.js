@@ -17,6 +17,11 @@ async function getBanners (ctx) {
     ctx.status = 200   
 }
 
+async function getPublicBanners (ctx) {
+    ctx.response.body = await Banner.find({ show: true })
+    ctx.status = 200   
+}
+
 async function createBanner (ctx) {
     const banner = new Banner(ctx.request.body)
     await banner.save()
@@ -57,6 +62,7 @@ async function deleteBanner (ctx) {
 export default {
     getBanner,
     getBanners,
+    getPublicBanners,
     createBanner,
     updateBanner,
     deleteBanner,
