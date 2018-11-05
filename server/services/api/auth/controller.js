@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import Exception from '../../../utils/exception'
 import passport from 'koa-passport'
 import bcrypt from 'bcrypt'
 
@@ -11,7 +12,6 @@ async function auth (ctx) {
   if (user) {
     const passCheck = bcrypt.compareSync(password, user.password)
     if (passCheck) {
-      console.log('Good')
       ctx.state.sign = true
       ctx.response.body = {
           token: jwt.sign({
@@ -22,15 +22,29 @@ async function auth (ctx) {
       ctx.status = 200
     } else {
       ctx.status = 400
-      throw new Error('Error')
+      throw new Exception(400)
     }
   } else {
     ctx.status = 404
-    throw new Error('Error')
-  }
-  
+    throw new Exception(404, 'User was not found')
+  }  
 }
 
+async function userGuard (ctx, next) {
+    await passport.authenticate('jwt', function (err, user) {
+      if (!user) {
+        ctx.status = 401
+      }
+      ctx.state.user = user
+    })(ctx)
+    if (ctx.status !== 401) {
+      return next()
+    } else {
+      throw new Exception(401, 'Unauthorized user')
+    }
+  }
+
 export default {
-  auth
+  auth,
+  userGuard
 }
