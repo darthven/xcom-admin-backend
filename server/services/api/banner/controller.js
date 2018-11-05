@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 import Banner from './../../../db/models/banner'
 import logger from './../../../config/winston.config'
 
@@ -26,6 +28,18 @@ async function createBanner (ctx) {
     const banner = new Banner(ctx.request.body)
     await banner.save()
     ctx.body = banner
+    ctx.status = 200 
+}
+
+async function uploadImage (ctx) {
+    const { id } = ctx.params
+    const { image } = ctx.request.body
+    console.log('BODY', ctx.request.body)
+    fs.writeFileSync(`${__dirname}/images`, image)
+    await Banner.updateOne({ _id: id }, {
+        image: image.filename
+    })
+    ctx.body = { url: `${__dirname}/images/${image.name}` }
     ctx.status = 200 
 }
 
@@ -64,6 +78,7 @@ export default {
     getBanners,
     getPublicBanners,
     createBanner,
+    uploadImage,
     updateBanner,
     deleteBanner,
 }

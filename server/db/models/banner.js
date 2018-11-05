@@ -8,7 +8,8 @@ const BannerSchema = new Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     productIds: { type: Array, required: true },
-    show: { type: Boolean, required: true }
+    show: { type: Boolean, required: true },
+    image: { type: String }
 })
 
 export default mongoose.model('Banner', BannerSchema)
