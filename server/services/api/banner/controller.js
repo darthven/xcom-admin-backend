@@ -1,6 +1,7 @@
 import fs from 'fs'
 
 import Banner from './../../../db/models/banner'
+import { IMAGE_DIR, IMAGE_URL } from './../../../config/env.config'
 import logger from './../../../config/winston.config'
 
 async function getBanner (ctx) {
@@ -33,13 +34,15 @@ async function createBanner (ctx) {
 
 async function uploadImage (ctx) {
     const { id } = ctx.params
-    const { image } = ctx.request.body
-    console.log('BODY', ctx.request.body)
-    fs.writeFileSync(`${__dirname}/images`, image)
+    const image = ctx.request.files.file
+    console.log('FIle', image.name,)
+    const reader = fs.createReadStream(image.path)
+    const writer = fs.createWriteStream(`${IMAGE_DIR}/${image.name}`)
+    reader.pipe(writer);
     await Banner.updateOne({ _id: id }, {
-        image: image.filename
+        image: image.name
     })
-    ctx.body = { url: `${__dirname}/images/${image.name}` }
+    ctx.body = { url: `${IMAGE_URL}/${image.name}`}
     ctx.status = 200 
 }
 
