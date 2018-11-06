@@ -20,7 +20,12 @@ async function getBanners (ctx) {
 }
 
 async function getPublicBanners (ctx) {
-    ctx.response.body = await Banner.find({ show: true })
+    ctx.response.body = (await Banner.find({ show: true })).map(ban => {
+        return {
+            ...ban._doc,
+            image: `${IMAGE_URL}/${ban.image}`
+        }
+    })
     ctx.status = 200   
 }
 
