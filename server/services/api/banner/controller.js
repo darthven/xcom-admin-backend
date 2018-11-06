@@ -7,7 +7,10 @@ async function getBanner (ctx) {
     const { id } = ctx.params
     const banner = await Banner.findOne({ _id: id }) 
     if (banner) {
-        ctx.response.body = banner
+        ctx.response.body = {
+            ...banner._doc,
+            image: `${IMAGE_URL}/${banner.image}`
+        }
         ctx.status = 200
     } else {
         ctx.status = 404
@@ -15,7 +18,12 @@ async function getBanner (ctx) {
 }
 
 async function getBanners (ctx) {
-    ctx.response.body = await Banner.find()
+    ctx.response.body = (await Banner.find()).map(ban => {
+        return {
+            ...ban._doc,
+            image: `${IMAGE_URL}/${ban.image}`
+        }
+    })
     ctx.status = 200   
 }
 
