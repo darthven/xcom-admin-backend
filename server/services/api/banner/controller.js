@@ -68,7 +68,7 @@ async function updateBanner (ctx) {
         productIds,
         show
     })
-    ctx.body = {
+    ctx.body = new Banner({
         _id: id, 
         title,
         body,
@@ -76,7 +76,7 @@ async function updateBanner (ctx) {
         endDate,
         productIds,
         show
-    }
+    })
     ctx.status = 200    
 }
 
