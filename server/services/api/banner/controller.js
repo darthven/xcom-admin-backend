@@ -2,7 +2,6 @@ import fs from 'fs'
 
 import Banner from './../../../db/models/banner'
 import { IMAGE_DIR, IMAGE_URL } from './../../../config/env.config'
-import logger from './../../../config/winston.config'
 
 async function getBanner (ctx) {
     const { id } = ctx.params
@@ -35,7 +34,6 @@ async function createBanner (ctx) {
 async function uploadImage (ctx) {
     const { id } = ctx.params
     const image = ctx.request.files.file
-    console.log('FIle', image.name,)
     const reader = fs.createReadStream(image.path)
     const writer = fs.createWriteStream(`${IMAGE_DIR}/${image.name}`)
     reader.pipe(writer);
