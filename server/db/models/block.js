@@ -4,8 +4,8 @@ const Schema = mongoose.Schema
 
 const BlockSchema = new Schema({
     title: { type: String, required: true },
-    region: { type: String, required: false },
-    store: { type: String, required: false },
+    regionId: { type: String, required: false },
+    storeId: { type: String, required: false },
     productIds: { type: Array, required: true },
     active: { type: Boolean, required: true },
 })

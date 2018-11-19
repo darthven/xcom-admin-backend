@@ -25,19 +25,19 @@ async function createBlock (ctx) {
 
 async function updateBlock (ctx) {
     const { id } = ctx.params
-    const { title, region, store, productIds, active } = ctx.request.body
+    const { title, regionId, storeId, productIds, active } = ctx.request.body
     await Block.updateOne({ _id: id }, {
         title,
-        region,
-        store,
+        regionId,
+        storeId,
         productIds,
         active
     })
     ctx.body = new Block({
         _id: id, 
         title,
-        region,
-        store,
+        regionId,
+        storeId,
         productIds,
         active
     })
