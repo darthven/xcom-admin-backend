@@ -1,0 +1,60 @@
+import Block from './../../../db/models/block'
+
+async function getBlock (ctx) {
+    const { id } = ctx.params
+    const block = await Block.findOne({ _id: id }) 
+    if (block) {
+        ctx.response.body = block._doc
+        ctx.status = 200
+    } else {
+        ctx.status = 404
+    }
+}
+
+async function getBlocks (ctx) {
+    ctx.response.body = (await Block.find()).map(bl => bl._doc)
+    ctx.status = 200   
+}
+
+async function createBlock (ctx) {
+    const block = new Block(ctx.request.body)
+    await block.save()
+    ctx.body = block
+    ctx.status = 200 
+}
+
+async function updateBlock (ctx) {
+    const { id } = ctx.params
+    const { title, region, store, productIds, active } = ctx.request.body
+    await Block.updateOne({ _id: id }, {
+        title,
+        region,
+        store,
+        productIds,
+        active
+    })
+    ctx.body = new Block({
+        _id: id, 
+        title,
+        region,
+        store,
+        productIds,
+        active
+    })
+    ctx.status = 200    
+}
+
+async function deleteBlock (ctx) {
+    const { id } = ctx.params
+    await Block.deleteOne({ _id: id })
+    ctx.body = id
+    ctx.status = 200        
+}
+
+export default {
+    getBlock,
+    getBlocks,
+    createBlock,
+    updateBlock,
+    deleteBlock
+}
