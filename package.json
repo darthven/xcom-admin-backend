@@ -2,10 +2,10 @@
   "name": "xcom-admin-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "babel-node server/index.js",
-    "start:prod": "node ./lib/index.js",
+    "start:prod": "pm2 startOrReload ecosystem.config.js",
     "build": "babel server -d lib --source-maps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
