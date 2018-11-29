@@ -15,17 +15,8 @@ async function getBlock (ctx) {
 }
 
 async function getBlocks (ctx) {
-    ctx.response.body = (await Block.find()).map(bl => bl._doc)
-    ctx.status = 200   
-}
-
-async function getBlocksByRegionWithProducts (ctx) {
-    const result = (await Block.find({ regionId: ctx.query.regionId })).map(bl => bl._doc)
-    for (const [index, doc] of result.entries()) {
-        const products = await request.get(`${XCOM_URL}/goods/by/ids/?ids=${doc.productIds.toString()}&region=${ctx.query.regionId}`)
-        result[index].products = JSON.parse(products)
-    }
-    ctx.response.body = result
+    const query = ctx.query.regionId ? { regionId: ctx.query.regionId } : {}
+    ctx.response.body = (await Block.find(query)).map(bl => bl._doc)
     ctx.status = 200   
 }
 
@@ -67,7 +58,6 @@ async function deleteBlock (ctx) {
 export default {
     getBlock,
     getBlocks,
-    getBlocksByRegionWithProducts,
     createBlock,
     updateBlock,
     deleteBlock
