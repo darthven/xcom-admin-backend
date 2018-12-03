@@ -1,7 +1,5 @@
-import request from 'request-promise-native'
 
 import Block from './../../../db/models/block'
-import { XCOM_URL } from '../../../config/env.config';
 
 async function getBlock (ctx) {
     const { id } = ctx.params
