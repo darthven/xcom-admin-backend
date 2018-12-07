@@ -2,6 +2,6 @@ import auth from './controller'
 
 export default {
   init: function (router) {
-    router.post('/api/auth', auth.auth)
+    router.post('/admin-api/auth', auth.auth)
   }
 }

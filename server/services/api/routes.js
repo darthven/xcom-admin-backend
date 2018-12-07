@@ -9,7 +9,7 @@ AuthRoutes.init(router)
 BannerRoutes.init(router)
 BlockRoutes.init(router)
 
-router.get('/api/', async (ctx) => {
+router.get('/admin-api/', async (ctx) => {
   ctx.body = {
     status: 'available',
     message: 'api@xcom-2018',
