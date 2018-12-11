@@ -8,5 +8,5 @@ export const MONGO_DB_USER = process.env.MONGO_DB_USER || 'xcom'
 export const MONGO_DB_PASSWORD = process.env.MONGO_DB_PASSWORD || '1234567890'
 export const MONGO_URL = process.env.MONGO_URL || `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB_NAME}`
 export const JWT_SECRET = process.env.JWT_SECRET || '1234567890'
-export const IMAGE_DIR = '/var/www/xcom-admin/public/static'
-export const IMAGE_URL = process.env.IMAGE_URL || 'https://app.6030000.ru/public/static'
+export const IMAGE_DIR = '/var/www/xcom-backend-admin/images'
+export const IMAGE_URL = process.env.IMAGE_URL || 'https://app.6030000.ru/images'
