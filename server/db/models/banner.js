@@ -7,7 +7,7 @@ const BannerSchema = new Schema({
     body: { type: String, required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    productIds: { type: Array, required: true },
+    productIds: { type: [Number], required: true },
     show: { type: Boolean, required: true },
     image: { type: String }
 })

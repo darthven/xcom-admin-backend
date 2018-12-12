@@ -6,7 +6,7 @@ const BlockSchema = new Schema({
     title: { type: String, required: true },
     regionId: { type: Number, required: false },
     storeId: { type: Number, required: false },
-    productIds: { type: Array, required: true },
+    productIds: { type: [Number], required: true },
     active: { type: Boolean, required: true },
 })
 
