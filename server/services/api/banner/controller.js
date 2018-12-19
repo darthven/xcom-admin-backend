@@ -34,7 +34,7 @@ async function getPublicBanners(ctx) {
   const query = ctx.query.regionId
     ? { regionId: { $in: [ctx.query.regionId, -1] } }
     : {};
-  ctx.response.body = (await Banner.find({ show: true, query })).map(ban => {
+  ctx.response.body = (await Banner.find({ show: true, ...query })).map(ban => {
     return {
       ...ban._doc,
       image: `${IMAGE_URL}/${ban.image}`
