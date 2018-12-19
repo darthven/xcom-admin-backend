@@ -13,7 +13,7 @@ async function getBlock(ctx) {
 
 async function getBlocks(ctx) {
   const query = ctx.query.regionId
-    ? { regionId: { $in: [ctx.query.regionId, 0] } }
+    ? { regionId: { $in: [ctx.query.regionId, -1] } }
     : {};
   ctx.response.body = (await Block.find(query)).map(bl => bl._doc);
   ctx.status = 200;
